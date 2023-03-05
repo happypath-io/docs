@@ -8,7 +8,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.com',
   },
-  docsRepositoryBase: 'https://github.com/happypath-io/docs',
+  docsRepositoryBase: 'https://github.com/happypath-io/docs/blob/main',
   footer: {
     text: 'Synthesize Inc.',
   },
