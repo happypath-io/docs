@@ -8,7 +8,7 @@
   },
   "contact": {
     "title": "Log in ↗",
-    "type": "page",
+    "type": "link",
     "href": "https://app.happypath.io",
     "newWindow": true
   }
