@@ -1,7 +1,7 @@
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>HappyPath</span>,
+  logo: <span>HappyPath Documentation</span>,
   project: {
     link: 'https://github.com/happypath-io/',
   },

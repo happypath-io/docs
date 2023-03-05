@@ -1,7 +1,14 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
+  "installation": "Installation",
   "advanced": "Advanced (A Folder)",
+
+  "website": {
+    "title": "HappyPath.io ↗",
+    "type": "page",
+    "href": "https://www.happypath.io",
+    "newWindow": true
+  },
 
   "contact": {
     "title": "Log in ↗",
