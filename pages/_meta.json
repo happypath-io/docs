@@ -7,9 +7,9 @@
     "type": "page"
   },
   "contact": {
-    "title": "Contact ↗",
+    "title": "Log in ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://app.happypath.io",
     "newWindow": true
   }
 }
