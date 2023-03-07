@@ -12,6 +12,11 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Synthesize Inc.',
   },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s',
+    }
+  },
 }
 
 export default config
