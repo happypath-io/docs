@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Install HappyPath
 
 ## Using NPM
@@ -68,6 +70,16 @@ const remoteConfig = getClient({
   },
 })
 ```
+
+## Initialize the Config
+
+The last step is to initialize the config. This is an async function.
+
+```js
+await remoteConfig.init()
+```
+
+<Callout>See a full example for NextJS [here](/examples/next-js)</Callout>
 
 ## Usage
 
