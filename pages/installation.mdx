@@ -2,18 +2,70 @@
 
 ## Using NPM
 
-`npm install @happypath-io/dynamic-config`
-
-## Configuration
-
-Import & initialize client
-
+```mdx copy
+npm install @happypath-io/remote-config
 ```
-import dynamicConfig from '@happypath-io/dynamic-config'
 
-await dynamicConfig.init({
-  apiKey: 'YOUR-API-KEY',
-  environment: '<development | staging | production>'
+## Get API Key (optional)
+
+You can create a free account on [happypath.io](https://app.happypath.io) to create
+and manage your remote configs. But if you'd rather, you can host it yourself, or
+on a different url.
+
+#### Get an API key
+
+1. Create a free account on [happypath.io](app.happypath.io)
+2. Create a config in your web dashboard. Each config you create will have its own API key which you will use to reference when creating the HappyPath client in your code.
+
+## Client Configuration
+
+### Import & initialize HappyPath client in your code
+
+#### Option 1: For configs hosted on [happypath.io](https://app.happypath.io), use an API Key:
+
+```js filename="happypath.config.js" copy
+import getClient from '@happypath-io/remote-config'
+
+const remoteConfig = getClient({
+  apiKey: 'YOUR-API-KEY', //replace with the key from a config created on happypath.io
+})
+```
+
+#### Option 2: For configs you want to host locally
+
+```js filename="happypath.config.js" copy
+import getClient from '@happypath-io/remote-config'
+
+const remoteConfig = getClient({
+  customFilePath: 'path/to/your/config.json', //replace with the path
+})
+```
+
+#### Option 3: For configs you want to host yourself on a URL somewhere else
+
+```js filename="happypath.config.js" copy
+import getClient from '@happypath-io/remote-config'
+
+const remoteConfig = getClient({
+  customRemoteUrl: 'https://example.com/your-config.json', //replace with URL
+})
+```
+
+#### Option 4: Provide a config object directly
+
+This kinda defeats the purpose of a remote config, but in case!
+
+```js filename="happypath.config.js" copy
+import getClient from '@happypath-io/remote-config'
+
+const remoteConfig = getClient({
+  customConfig: {
+    name: 'john doe',
+    age: 30,
+    otherAttributes: {
+      otherLists: ['CA', 'MD'],
+    },
+  },
 })
 ```
 
@@ -23,7 +75,7 @@ By default, the client will refresh configuration every 30 seconds. You can over
 
 Client exposes single methods `get` which accepts `key` and optional default value. It returns corresponding value from its config.
 
-```
+```js
 import dynamicConfig from '@happypath-io/dynamic-config'
 
 const name = dynamicConfig.get<string>('name');

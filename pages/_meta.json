@@ -1,7 +1,8 @@
 {
   "index": "Introduction",
   "installation": "Installation",
-  "advanced": "Advanced (A Folder)",
+  "example": "Example",
+
 
   "website": {
     "title": "HappyPath.io ↗",
