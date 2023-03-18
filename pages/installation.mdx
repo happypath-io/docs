@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs';
 
 # Install HappyPath
 
@@ -26,31 +26,31 @@ on a different url.
 #### Option 1: For configs hosted on [happypath.io](https://app.happypath.io), use an API Key:
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config'
+import getClient from '@happypath-io/remote-config';
 
 const remoteConfig = getClient({
   apiKey: 'YOUR-API-KEY', //replace with the key from a config created on happypath.io
-})
+});
 ```
 
 #### Option 2: For configs you want to host locally
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config'
+import getClient from '@happypath-io/remote-config';
 
 const remoteConfig = getClient({
   customFilePath: 'path/to/your/config.json', //replace with the path
-})
+});
 ```
 
 #### Option 3: For configs you want to host yourself on a URL somewhere else
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config'
+import getClient from '@happypath-io/remote-config';
 
 const remoteConfig = getClient({
   customRemoteUrl: 'https://example.com/your-config.json', //replace with URL
-})
+});
 ```
 
 #### Option 4: Provide a config object directly
@@ -58,7 +58,7 @@ const remoteConfig = getClient({
 This kinda defeats the purpose of a remote config, but in case!
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config'
+import getClient from '@happypath-io/remote-config';
 
 const remoteConfig = getClient({
   customConfig: {
@@ -68,7 +68,7 @@ const remoteConfig = getClient({
       otherLists: ['CA', 'MD'],
     },
   },
-})
+});
 ```
 
 ## Initialize the Config
@@ -76,10 +76,10 @@ const remoteConfig = getClient({
 The last step is to initialize the config. This is an async function.
 
 ```js
-await remoteConfig.init()
+await remoteConfig.init();
 ```
 
-<Callout>See a full example for NextJS [here](/examples/next-js)</Callout>
+<Callout>See a full example for React [here](/examples/react)</Callout>
 
 ## Usage
 
@@ -87,12 +87,19 @@ By default, the client will refresh configuration every 30 seconds. You can over
 
 Client exposes single methods `get` which accepts `key` and optional default value. It returns corresponding value from its config.
 
-```js
-import dynamicConfig from '@happypath-io/dynamic-config'
+```ts
+import getClient from '@happypath-io/remote-config';
 
-const name = dynamicConfig.get<string>('name');
-const isEnabled = dynamicConfig.get<boolean>('isEnabled', false);
-const age = dynamicConfig.get<number>('age');
-const list = dynamicConfig.get<string[]>('items', ['defaultValue']);
-const person = dynamicConfig.get<Person>('person');
+const remoteConfig = getClient({
+  ...configuration,
+});
+
+async () => {
+  await remoteConfig.init();
+  const name = remoteConfig.get<string>('name');
+  const isEnabled = remoteConfig.get<boolean>('isEnabled', false);
+  const age = remoteConfig.get<number>('age');
+  const list = remoteConfig.get<string[]>('items', ['defaultValue']);
+  const person = remoteConfig.get<Person>('person');
+};
 ```
