@@ -3,32 +3,43 @@
 How to integrate HappyPath into a React app.
 
 ```js filename="happypath.config.js"
-import getClient from '@happypath-io/remote-config'
+import getClient from '@happypath-io/remote-config';
 
 //load config from API on happypath.io
 const remoteConfig = getClient({
   apiKey: '123456',
-})
+});
+
+export default remoteConfig;
 ```
 
 ```js filename="__app.tsx"
-await remoteConfig.init()
+import remoteConfig from './happypath.config'
+function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    (async () => {
+      await remoteConfig.init();
+    })();
+  }, []);
+  return <Component {...pageProps} />;
 ```
 
 ```tsx filename="index.tsx"
 //import
-TODO
-//grab the name from the config and use it in code
-const name = remoteConfig.get('name')
-const bannerIsEnabled = remoteConfig.get('isEnabled')
+import remoteConfig from './happypath.config';
 
-<div>
-  <p>Hello, {name}!</p>
-</div>
-
-//check if isEnabled flag is true
-{if bannerIsEnabled && (
-  <div className="banner">Wecome to the application!</div>
-)}
-
+function MyComponent() {
+  //grab the name from the config and use it in code
+  const name = remoteConfig.get('name');
+  const bannerIsEnabled = remoteConfig.get('isEnabled');
+  return (
+    <div>
+      <p>Hello, {name}!</p>
+      //check if isEnabled flag is true
+      {bannerIsEnabled && (
+        <div className='banner'>Wecome to the application!</div>
+      )}
+    </div>
+  );
+}
 ```
