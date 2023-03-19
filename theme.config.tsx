@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 
 const config: DocsThemeConfig = {
   logo: <span>HappyPath Documentation</span>,

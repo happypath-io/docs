@@ -1,7 +1,77 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Install HappyPath with React
 
 How to integrate HappyPath into a React app.
 
+<Tabs items={['TypeScript', 'JavaScript']}>
+  <Tab>
+
+```ts filename="happypath.config.ts"
+import getClient from '@happypath-io/remote-config';
+
+//load config from API on happypath.io
+
+const remoteConfig = getClient({
+  apiKey: '123456',
+});
+
+export default remoteConfig;
+```
+
+```ts filename="app.tsx"
+import remoteConfig from './happypath.config'
+function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    (async () => {
+      await remoteConfig.init();
+    })();
+  }, []);
+  return <Component {...pageProps} />;
+```
+
+```tsx filename="useGet.tsx"
+import remoteConfig from './happypath.config';
+import React, { useEffect } from 'react';
+
+function useGet<t>(key: string, defaultValue: t) {
+  const [value, setValue] = React.useState<t>(defaultValue);
+  useEffect(() => {
+    (async () => {
+      await remoteConfig.waitUntilLoaded();
+      setValue(remoteConfig.get<t>(key));
+    })();
+  }, [key]);
+  return value;
+}
+```
+
+```tsx filename="index.tsx"
+//import
+import { useGet } from './useGet';
+
+function MyComponent() {
+  // grab the name key from your config and use it in code
+  const name = useGet<string>('name', 'add an optional default value');
+  const bannerIsEnabled = useGet<boolean>('isEnabled', false);
+  return (
+    <div>
+      <p>Hello, {name}!</p>
+      {/* check if a key called isEnabled flag is true */}
+      {bannerIsEnabled && (
+        <div className='banner'>Wecome to the application!</div>
+      )}
+    </div>
+  );
+}
+```
+
+
+  </Tab>
+
+  <Tab>
+
+    
 ```js filename="happypath.config.js"
 import getClient from '@happypath-io/remote-config';
 
@@ -60,63 +130,6 @@ function MyComponent() {
 }
 ```
 
-## Typescript
+  </Tab>
+</Tabs>
 
-```ts filename="happypath.config.ts"
-import getClient from '@happypath-io/remote-config';
-
-//load config from API on happypath.io
-
-const remoteConfig = getClient({
-  apiKey: '123456',
-});
-
-export default remoteConfig;
-```
-
-```ts filename="app.tsx"
-import remoteConfig from './happypath.config'
-function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    (async () => {
-      await remoteConfig.init();
-    })();
-  }, []);
-  return <Component {...pageProps} />;
-```
-
-```tsx filename="useGet.tsx"
-import remoteConfig from './happypath.config';
-import React, { useEffect } from 'react';
-
-function useGet<t>(key: string, defaultValue: t) {
-  const [value, setValue] = React.useState<t>(defaultValue);
-  useEffect(() => {
-    (async () => {
-      await remoteConfig.waitUntilLoaded();
-      setValue(remoteConfig.get<t>(key));
-    })();
-  }, [key]);
-  return value;
-}
-```
-
-```tsx filename="index.tsx"
-//import
-import { useGet } from './useGet';
-
-function MyComponent() {
-  // grab the name from the config and use it in code
-  const name = useGet<string>('name', 'taylor');
-  const bannerIsEnabled = useGet<boolean>('isEnabled', false);
-  return (
-    <div>
-      <p>Hello, {name}!</p>
-      {/* check if isEnabled flag is true */}
-      {bannerIsEnabled && (
-        <div className='banner'>Wecome to the application!</div>
-      )}
-    </div>
-  );
-}
-```
