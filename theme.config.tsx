@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
@@ -13,8 +14,11 @@ const config: DocsThemeConfig = {
     text: 'Synthesize Inc.',
   },
   useNextSeoProps() {
-    return {
-      titleTemplate: '%s',
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s | HappyPath'
+      }
     }
   },
 }
