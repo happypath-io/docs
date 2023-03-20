@@ -1,8 +1,8 @@
 ---
-description: How to install HappyPath Remote Config libraries in your project 
+description: How to install HappyPath Remote Config libraries in your project
 ---
 
-import { Callout } from 'nextra-theme-docs';
+import { Callout } from 'nextra-theme-docs'
 
 # Install HappyPath
 
@@ -12,15 +12,20 @@ import { Callout } from 'nextra-theme-docs';
 npm install @happypath-io/remote-config
 ```
 
+<Callout>
+  View HappyPath on NPM
+  [here](https://www.npmjs.com/package/@happypath-io/remote-config)
+</Callout>
+
 ## Get API Key (optional)
 
 You can create a free account on [happypath.io](https://app.happypath.io) to create
 and manage your remote configs. But if you'd rather, you can host it yourself, or
 on a different url.
 
-#### Get an API key
+#### Create free account
 
-1. Create a free account on [happypath.io](app.happypath.io)
+1. Create a free account on [happypath.io](https://app.happypath.io)
 2. Create a config in your web dashboard. Each config you create will have its own API key which you will use to reference when creating the HappyPath client in your code.
 
 ## Client Configuration
@@ -30,31 +35,31 @@ on a different url.
 #### Option 1: For configs hosted on [happypath.io](https://app.happypath.io), use an API Key:
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
   apiKey: 'YOUR-API-KEY', //replace with the key from a config created on happypath.io
-});
+})
 ```
 
 #### Option 2: For configs you want to host locally
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
   customFilePath: 'path/to/your/config.json', //replace with the path
-});
+})
 ```
 
 #### Option 3: For configs you want to host yourself on a URL somewhere else
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
   customRemoteUrl: 'https://example.com/your-config.json', //replace with URL
-});
+})
 ```
 
 #### Option 4: Provide a config object directly
@@ -62,7 +67,7 @@ const remoteConfig = getClient({
 This kinda defeats the purpose of a remote config, but in case!
 
 ```js filename="happypath.config.js" copy
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
   customConfig: {
@@ -72,7 +77,7 @@ const remoteConfig = getClient({
       otherLists: ['CA', 'MD'],
     },
   },
-});
+})
 ```
 
 ## Initialize the Config
@@ -80,10 +85,8 @@ const remoteConfig = getClient({
 The last step is to initialize the config. This is an async function.
 
 ```js
-await remoteConfig.init();
+await remoteConfig.init()
 ```
-
-<Callout>See a full example for React [here](/examples/react)</Callout>
 
 ## Usage
 
@@ -92,18 +95,20 @@ By default, the client will refresh configuration every 30 seconds. You can over
 Client exposes single methods `get` which accepts `key` and optional default value. It returns corresponding value from its config.
 
 ```ts
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
   ...configuration,
-});
+})
 
-async () => {
-  await remoteConfig.init();
-  const name = remoteConfig.get<string>('name');
-  const isEnabled = remoteConfig.get<boolean>('isEnabled', false);
-  const age = remoteConfig.get<number>('age');
-  const list = remoteConfig.get<string[]>('items', ['defaultValue']);
-  const person = remoteConfig.get<Person>('person');
-};
+;async () => {
+  await remoteConfig.init()
+  const name = remoteConfig.get<string>('name')
+  const isEnabled = remoteConfig.get<boolean>('isEnabled', false)
+  const age = remoteConfig.get<number>('age')
+  const list = remoteConfig.get<string[]>('items', ['defaultValue'])
+  const person = remoteConfig.get<Person>('person')
+}
 ```
+
+<Callout>See a full example for React [here](/examples/react)</Callout>

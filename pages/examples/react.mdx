@@ -6,19 +6,20 @@ How to integrate HappyPath into a React app.
 
 <Tabs items={['TypeScript', 'JavaScript']}>
   <Tab>
+Create a config file at the base of your project (you can name it anything you want!). You have  [options](/installation) where the config comes from.
 
 ```ts filename="happypath.config.ts"
-import getClient from '@happypath-io/remote-config';
-
-//load config from API on happypath.io
+import getClient from '@happypath-io/remote-config'
 
 const remoteConfig = getClient({
-  apiKey: '123456',
-});
+  apiKey: '123456', //load config from API on happypath.io, otherwise you can host yourself (see docs.happypath.io/installation)
+  refreshIntervalSeconds: '5', //defaults to 30 seconds if this isn't set
+})
 
-export default remoteConfig;
+export default remoteConfig
 ```
 
+<p>Import the config into your app like this:</p>
 ```ts filename="app.tsx"
 import remoteConfig from './happypath.config'
 function MyApp({ Component, pageProps }: AppProps) {
@@ -29,58 +30,57 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return <Component {...pageProps} />;
 ```
+<p>If you don't want to block your app from running while the data is received from the remote config, create a Hook like this. Otherwise you choose to block your app until the config is fetched.</p>
+```tsx filename="hooks/useGet.tsx"
+import remoteConfig from './happypath.config'
+import React, { useEffect } from 'react'
 
-```tsx filename="useGet.tsx"
-import remoteConfig from './happypath.config';
-import React, { useEffect } from 'react';
-
-function useGet<t>(key: string, defaultValue: t) {
-  const [value, setValue] = React.useState<t>(defaultValue);
+export function useGet<t>(key: string, defaultValue: t) {
+  const [value, setValue] = React.useState < t > defaultValue
   useEffect(() => {
-    (async () => {
-      await remoteConfig.waitUntilLoaded();
-      setValue(remoteConfig.get<t>(key));
-    })();
-  }, [key]);
-  return value;
+    ;(async () => {
+      await remoteConfig.waitUntilLoaded()
+      setValue(remoteConfig.get < t > key)
+    })()
+  }, [key])
+  return value
 }
-```
 
+````
+<p>Now you can reference fields in your config!</p>
 ```tsx filename="index.tsx"
 //import
-import { useGet } from './useGet';
+import { useGet } from './useGet'
 
 function MyComponent() {
   // grab the name key from your config and use it in code
-  const name = useGet<string>('name', 'add an optional default value');
-  const bannerIsEnabled = useGet<boolean>('isEnabled', false);
+  const name = useGet<string>('name', 'add an optional default value')
+  const bannerIsEnabled = useGet<boolean>('isEnabled', false)
   return (
     <div>
       <p>Hello, {name}!</p>
       {/* check if a key called isEnabled flag is true */}
       {bannerIsEnabled && (
-        <div className='banner'>Wecome to the application!</div>
+        <div className="banner">Wecome to the application!</div>
       )}
     </div>
-  );
+  )
 }
-```
-
+````
 
   </Tab>
 
   <Tab>
 
-    
 ```js filename="happypath.config.js"
-import getClient from '@happypath-io/remote-config';
+import getClient from '@happypath-io/remote-config'
 
-//load config from API on happypath.io
 const remoteConfig = getClient({
-  apiKey: '123456',
-});
+  apiKey: '123456', //load config from API on happypath.io
+  refreshIntervalSeconds: '5', //defaults to 30 seconds if this isn't set
+})
 
-export default remoteConfig;
+export default remoteConfig
 ```
 
 ```js filename="app.jsx"
@@ -95,41 +95,40 @@ function MyApp({ Component, pageProps }) {
 ```
 
 ```jsx filename="useGet.jsx"
-import remoteConfig from './happypath.config';
-import React, { useEffect } from 'react';
+import remoteConfig from './happypath.config'
+import React, { useEffect } from 'react'
 
 export function useGet(key, defaultValue) {
-  const [value, setValue] = React.useState(defaultValue);
+  const [value, setValue] = React.useState(defaultValue)
   useEffect(() => {
-    (async () => {
-      await remoteConfig.waitUntilLoaded();
-      setValue(remoteConfig.get(key));
-    })();
-  }, [key]);
-  return value;
+    ;(async () => {
+      await remoteConfig.waitUntilLoaded()
+      setValue(remoteConfig.get(key))
+    })()
+  }, [key])
+  return value
 }
 ```
 
 ```jsx filename="index.jsx"
 //import
-import { useGet } from './useGet';
+import { useGet } from './useGet'
 
 function MyComponent() {
   // grab the name from the config and use it in code
-  const name = useGet('name', 'taylor');
-  const bannerIsEnabled = useGet('isEnabled', false);
+  const name = useGet('name', 'taylor')
+  const bannerIsEnabled = useGet('isEnabled', false)
   return (
     <div>
       <p>Hello, {name}!</p>
       {/* check if isEnabled flag is true */}
       {bannerIsEnabled && (
-        <div className='banner'>Wecome to the application!</div>
+        <div className="banner">Wecome to the application!</div>
       )}
     </div>
-  );
+  )
 }
 ```
 
   </Tab>
 </Tabs>
-
