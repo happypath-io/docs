@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start"
   },
   "repository": {
@@ -20,6 +21,7 @@
   "dependencies": {
     "eslint-config-next": "^13.2.3",
     "next": "^13.2.3",
+    "next-sitemap": "^4.0.6",
     "nextjs-google-analytics": "^2.3.3",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
