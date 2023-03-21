@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://docs.happypath.io
+
+# Sitemaps
+Sitemap: https://docs.happypath.io/sitemap.xml
