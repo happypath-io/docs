@@ -101,7 +101,7 @@ import React, { useEffect } from 'react'
 export function useGet(key, defaultValue) {
   const [value, setValue] = React.useState(defaultValue)
   useEffect(() => {
-    ;(async () => {
+    ((async () => {
       await remoteConfig.waitUntilLoaded()
       setValue(remoteConfig.get(key))
     })()
