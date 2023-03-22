@@ -36,11 +36,11 @@ import remoteConfig from './happypath.config'
 import React, { useEffect } from 'react'
 
 export function useGet<t>(key: string, defaultValue: t) {
-  const [value, setValue] = React.useState < t > defaultValue
+  const [value, setValue] = React.useState<T> defaultValue
   useEffect(() => {
     ((async () => {
       await remoteConfig.waitUntilLoaded()
-      setValue(remoteConfig.get < t > key)
+      setValue(remoteConfig.get<T>key)
     })()
   }, [key])
   return value
