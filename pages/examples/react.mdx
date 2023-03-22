@@ -38,7 +38,7 @@ import React, { useEffect } from 'react'
 export function useGet<t>(key: string, defaultValue: t) {
   const [value, setValue] = React.useState < t > defaultValue
   useEffect(() => {
-    ;(async () => {
+    ((async () => {
       await remoteConfig.waitUntilLoaded()
       setValue(remoteConfig.get < t > key)
     })()
