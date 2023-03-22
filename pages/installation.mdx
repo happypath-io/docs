@@ -101,7 +101,7 @@ const remoteConfig = getClient({
   ...configuration,
 })
 
-;async () => {
+async () => {
   await remoteConfig.init()
   const name = remoteConfig.get<string>('name')
   const isEnabled = remoteConfig.get<boolean>('isEnabled', false)
